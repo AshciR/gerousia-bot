@@ -5,7 +5,5 @@ interacting with the Discord APIs
 
 
 def ping_server() -> int:
-    """Placeholder function that will ping the discord server
-    :rtype: object
-    """
+    """Placeholder function that will ping the discord server"""
     return 200
