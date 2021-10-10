@@ -41,7 +41,10 @@ bot_dispatcher.add_handler(echo_handler)
 bot_dispatcher.add_handler(unknown_handler)
 
 bot_updater.start_polling()  # polls the server for new messages, could replace with webhook later on
-bot_updater.idle()  # waits for termination signals when
+"""
+Waits for termination signals to stop polling. Locally press Ctrl+C in the console to stop.
+"""
+bot_updater.idle()
 
 
 def say_hello() -> str:

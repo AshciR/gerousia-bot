@@ -1,5 +1,5 @@
-from telegram import telegram_bot
-from discord import discord_apis
+import telegram_bot
+import discord_apis
 
 """
 The main function for the bot. 
