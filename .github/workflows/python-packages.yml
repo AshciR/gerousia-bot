@@ -32,7 +32,7 @@ jobs:
         # exit-zero treats all errors as warnings.
         pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
-      run: pipenv run pytest --cov --cov-fail-under=100
+      run: pipenv run pytest --cov --cov-fail-under=80
     - name: Build binary wheel and a source tarball
       run: |
         pipenv-setup sync --dev

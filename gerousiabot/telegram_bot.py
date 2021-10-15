@@ -88,7 +88,7 @@ def configure_bot(api_token, handlers) -> Updater:
     """
     # Set up the instance of the bot using token from the @BotFather
     bot_updater = Updater(token=api_token)
-
+    
     bot_dispatcher = bot_updater.dispatcher
     for handler in handlers:
         bot_dispatcher.add_handler(handler)
