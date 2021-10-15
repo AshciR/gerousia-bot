@@ -1,4 +1,4 @@
-from gerousiabot.telegram import telegram_bot
+from gerousiabot import telegram_bot
 
 
 def test_say_hello():
