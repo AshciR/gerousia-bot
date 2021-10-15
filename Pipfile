@@ -10,7 +10,9 @@ python-telegram-bot = "*"
 python-dotenv = "*"
 
 [dev-packages]
-flake8 = "*" 
+flake8 = "*"
+python-telegram-bot = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3"

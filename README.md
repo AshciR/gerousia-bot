@@ -19,7 +19,7 @@ git clone https://github.com/AshciR/gerousia-bot.git
 ```
 3. Change directory to the folder
 ```
-cd gerousiabot
+cd gerousiabot/gerousiabot
 ```
 4. Install the project's dependencies via pipenv
 ```
