@@ -79,7 +79,7 @@ def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
 
 
-def configure_bot(api_token, handlers) -> object:
+def configure_bot(api_token, handlers) -> Updater:
     """
     Configures the bot with correct handlerrs
     :param api_token: the API token
