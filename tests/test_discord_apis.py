@@ -1,4 +1,4 @@
-from gerousiabot.discord import discord_apis
+from gerousiabot import discord_apis
 
 
 def test_ping_server():
