@@ -9,6 +9,10 @@ pytest-cov = "*"
 python-telegram-bot = "*"
 python-dotenv = "*"
 mock = "*"
+hikari = "==2.0.0.dev103"
+pytest-asyncio = "*"
+asyncmock = "*"
+asyncio = "*"
 
 [dev-packages]
 flake8 = "*"

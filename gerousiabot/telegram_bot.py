@@ -81,7 +81,7 @@ def unknown(update, context):
 
 def configure_bot(api_token, handlers) -> Updater:
     """
-    Configures the bot with correct handlerrs
+    Configures the bot with correct handlers
     :param api_token: the API token
     :param handlers: the handlers to be added to the bot
     :return:

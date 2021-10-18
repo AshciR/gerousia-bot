@@ -44,10 +44,10 @@ def test_get_api_token(mocked_env):
 def test_say_hello():
     assert 'The Telegram Bot says hello' == telegram_bot.say_hello()
 
-@patch("gerousiabot.telegram_bot.get_api_token")
-@patch("gerousiabot.telegram_bot.get_bot_handlers")
-@patch("gerousiabot.telegram_bot.configure_bot")
 @patch("gerousiabot.telegram_bot.start_bot")
+@patch("gerousiabot.telegram_bot.configure_bot")
+@patch("gerousiabot.telegram_bot.get_bot_handlers")
+@patch("gerousiabot.telegram_bot.get_api_token")
 def test_run_bot(mocked_get_api_token,mocked_get_bot_handlers,mocked_configure_bot,mocked_start_bot):
     telegram_bot.run_bot()
 
@@ -77,8 +77,6 @@ def test_setup_logger(mocked_logging):
 def test_get_bot_handlers():
     handlers = telegram_bot.get_bot_handlers()
 
-    ## TODO more robust testing may be necessary.
-
     assert 3 == len(handlers)
 
 @patch("gerousiabot.telegram_bot.Updater")
@@ -89,12 +87,9 @@ def test_configure_bot(mocked_updater):
 
     telegram_bot.configure_bot('test', [handler])
 
-    ## TODO more robust testing may be necessary.
-    
     mocked_config.dispatcher.add_handler.assert_called()
 
 def test_start_bot():
-    
     mocked_bot_updater = Mock()
     telegram_bot.start_bot(mocked_bot_updater)
 
