@@ -1,4 +1,4 @@
-from gerousiabot import bot_handlers
+from gerousiabot import telegram_bot, bot_handlers
 from unittest.mock import Mock, patch
 
 
@@ -14,7 +14,7 @@ def test_say_hello():
 
 @patch("gerousiabot.telegram_bot.start_bot")
 @patch("gerousiabot.telegram_bot.configure_bot")
-@patch("gerousiabot.telegram_bot.get_bot_handlers")
+@patch("gerousiabot.bot_handlers.get_bot_handlers")
 @patch("gerousiabot.telegram_bot.get_api_token")
 def test_run_bot(mocked_get_api_token, mocked_get_bot_handlers, mocked_configure_bot, mocked_start_bot):
     telegram_bot.run_bot()
@@ -42,12 +42,6 @@ def test_setup_logger(mocked_logging):
     mocked_logging.FileHandler().setFormatter.assert_called()
 
     assert mocked_logging.getLogger().addHandler.call_count == 2
-
-
-def test_get_bot_handlers():
-    handlers = bot_handlers.get_bot_handlers()
-
-    assert 3 == len(handlers)
 
 
 @patch("gerousiabot.telegram_bot.Updater")

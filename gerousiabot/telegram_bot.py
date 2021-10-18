@@ -4,7 +4,7 @@ This module will hold the functions used for the Telegram Bot.
 """
 import logging
 import os
-import bot_handlers
+from gerousiabot import bot_handlers
 
 from dotenv import load_dotenv
 from telegram.ext import Updater
