@@ -46,7 +46,7 @@ def get_user_list() -> list:
     Query discord user list.
     Not yet implemented. Returns test data
     """
-    user_list = ['Alrick', 'Richard', 'Jheuvan']
+    user_list = ['rick', 'ash', 'jk']
     return user_list
 
 
