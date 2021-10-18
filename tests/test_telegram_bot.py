@@ -1,4 +1,4 @@
-from gerousiabot import telegram_bot, bot_handlers
+from gerousiabot import telegram_bot
 from unittest.mock import Mock, patch
 
 
