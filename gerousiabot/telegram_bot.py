@@ -4,16 +4,10 @@ This module will hold the functions used for the Telegram Bot.
 """
 import logging
 import os
+from gerousiabot import bot_handlers
 
 from dotenv import load_dotenv
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-
-
-def run_bot():
-    bot_token = get_api_token('API_KEY')
-    handlers = get_bot_handlers()
-    telegram_bot = configure_bot(api_token=bot_token, handlers=handlers)
-    start_bot(telegram_bot)
+from telegram.ext import Updater
 
 
 def setup_logger() -> object:
@@ -54,31 +48,6 @@ def get_api_token(key) -> str:
     return os.getenv(key)
 
 
-# TODO: We should move the handler code to it's own file
-def get_bot_handlers() -> list:
-    """
-    Gets the list of the handlers to be used by the bot
-    :return: the list of the handlers
-    """
-    start_handler = CommandHandler('start', start)
-    echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
-    unknown_handler = MessageHandler(Filters.command, unknown)
-
-    return [start_handler, echo_handler, unknown_handler]
-
-
-def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
-
-
-def echo(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
-
-
-def unknown(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
-
-
 def configure_bot(api_token, handlers) -> Updater:
     """
     Configures the bot with correct handlers
@@ -88,17 +57,24 @@ def configure_bot(api_token, handlers) -> Updater:
     """
     # Set up the instance of the bot using token from the @BotFather
     bot_updater = Updater(token=api_token)
-    
     bot_dispatcher = bot_updater.dispatcher
+
     for handler in handlers:
         bot_dispatcher.add_handler(handler)
 
     return bot_updater
 
 
+def run_bot():
+    bot_token = get_api_token('API_KEY')
+    handlers = bot_handlers.get_bot_handlers()
+    telegram_bot = configure_bot(api_token=bot_token, handlers=handlers)
+    start_bot(telegram_bot)
+
+
 def start_bot(bot_updater):
     """
-    Starts a proivded bot
+    Starts a provided bot
     :param bot_updater:
     """
     # Polls the server for new messages, could replace with webhook later on
