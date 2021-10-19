@@ -1,5 +1,9 @@
+from enum import Enum
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler, CallbackContext
+
+
+Response = Enum('Response', "CHECK_USERS CHECK_DOTA BLANK")
 
 
 def get_bot_handlers() -> list:
@@ -18,8 +22,8 @@ def get_bot_handlers() -> list:
 
 def start_keyboard() -> list:
     """Initialize the keyboard"""
-    keyboard = [InlineKeyboardButton("Check Users", callback_data='user_check'),
-                InlineKeyboardButton("Blank button", callback_data='blank_button')]
+    keyboard = [InlineKeyboardButton("Check Users", callback_data=Response.CHECK_USERS),
+                InlineKeyboardButton("Blank button", callback_data=Response.BLANK)]
     return keyboard
 
 
@@ -31,10 +35,11 @@ def keyboard_button_pressed(update: Update, context: CallbackContext) -> None:
     query.answer()
 
     query.edit_message_text(text=f"Selected option: {query.data}")  # for debugging, remove once final
-    if query.data == "user_check":
+
+    if query.data is Response.CHECK_USERS:
         users = format_user_list(get_user_list())
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Users currently on the server:\n" + users)
-    elif query.data == "blank_button":
+    elif query.data is Response.BLANK:
         context.bot.send_message(chat_id=update.effective_chat.id, text="Nothing to see here.")
     else:
         print("Nothing happened.")
@@ -52,21 +57,26 @@ def get_user_list() -> list:
 
 def format_user_list(user_list: list) -> str:
     """ Returns a formatted user list with one name per line."""
-    string_layout = str()
-    for name in user_list:
-        string_layout = string_layout + f"- {name}\n"
+    # new_list = [f"- {x}\n" for x in user_list]
+    # Equivalent to below
+    new_list = map(lambda x: f"- {x}\n", user_list)
+    formed_string: str = ''.join(new_list)
 
-    return string_layout
+    return formed_string
 
 
 def start(update, context) -> None:
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Gerousia bot! U+1F916")
+    """Handler definition for the bot start command: /start"""
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Gerousia bot! 🤖")
     kb_markup = InlineKeyboardMarkup(start_keyboard())
     update.message.reply_text('Please select one:', reply_markup=kb_markup)
 
 
 def check_users(update, context) -> None:
-    """Retrieve user list via command: /chkusers"""
+    """
+    Handler definition for check users command: /chkusers
+    Used to retrieve the names of the users currently logged in.
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=f"Users currently on the server:\n" + format_user_list(get_user_list()))
 
@@ -77,4 +87,5 @@ def help_command(update, context) -> None:
 
 
 def unknown_command(update, context) -> None:
+    """Handler definition to manage any unknown commands"""
     context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
