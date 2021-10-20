@@ -1,9 +1,14 @@
-from gerousiabot import bot_handlers
 from unittest.mock import Mock, patch
-from enum import Enum
+
 import pytest
 
-Test_Response = Enum('Test_Response', "CHECK_USERS CHECK_DOTA BLANK")
+from gerousiabot import bot_handlers
+
+test_response = bot_handlers.Response
+
+
+def test_response_enum():
+    assert len(test_response) == 3
 
 
 def test_start():
@@ -26,8 +31,8 @@ def test_help_command():
 
     bot_handlers.help_command(mocked_update, mocked_context)
 
-    mocked_update.message.reply_text.assert_called()
-    mocked_update.message.reply_text.assert_called_with("Use /start to test this bot.")
+    mocked_context.bot.send_message.assert_called()
+    mocked_context.bot.send_message.assert_called_with(chat_id=0, text="Use /start to test this bot.")
 
 
 def test_unknown():
@@ -45,27 +50,31 @@ def test_unknown():
 def test_get_bot_handlers():
     handlers = bot_handlers.get_bot_handlers()
 
-    assert len(handlers) == 4
+    assert len(handlers) == 5
 
 
 def test_start_keyboard():
-    buttons = bot_handlers.start_keyboard()
-    assert len(buttons) == 2
+    keyboard = bot_handlers.get_keyboard()
+    assert len(keyboard) == 1
+    assert len(keyboard[0]) == 2
+    assert isinstance(keyboard, list)
 
 
-@pytest.mark.parametrize("_input,expected", [(Test_Response.CHECK_USERS, 0),
-                                             (Test_Response.BLANK, 0)],
-                         ids=["User query", "Other query"])
-@patch("gerousiabot.bot_handlers.Response", Test_Response)
-def test_keyboard_button_pressed(_input, expected):
+@pytest.mark.parametrize(
+    "_input", [test_response.CHECK_USERS.name, test_response.BLANK.name],
+    ids=["Check User Button Press", "Blank Button Press"]
+)
+@patch("gerousiabot.bot_handlers.Response", test_response)
+def test_keyboard_button_pressed(_input):
     mocked_update, mocked_context = Mock(), Mock()
+
     mocked_update.effective_chat.id = 0
     mocked_update.callback_query.data = _input
 
     bot_handlers.keyboard_button_pressed(mocked_update, mocked_context)
 
+    assert mocked_update.effective_chat.id == 0
     mocked_context.bot.send_message.assert_called()
-    assert mocked_update.effective_chat.id == expected  # Yes, this is lazy. I am open to suggestions
 
 
 def test_get_user_list():
