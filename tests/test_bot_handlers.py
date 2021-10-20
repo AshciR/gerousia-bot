@@ -35,6 +35,19 @@ def test_help_command():
     mocked_context.bot.send_message.assert_called_with(chat_id=0, text="Use /start to test this bot.")
 
 
+def test_check_users_command():
+    mocked_update = Mock()
+    mocked_context = Mock()
+
+    mocked_update.effective_chat.id = 0
+
+    bot_handlers.check_users(mocked_update, mocked_context)
+
+    mocked_context.bot.send_message.assert_called()
+    expected_text = f"Users currently on the server:\n" + bot_handlers.format_user_list(bot_handlers.get_user_list())
+    mocked_context.bot.send_message.assert_called_with(chat_id=0, text=expected_text)
+
+
 def test_unknown():
     mocked_update = Mock()
     mocked_context = Mock()
@@ -65,7 +78,7 @@ def test_start_keyboard():
     ids=["Check User Button Press", "Blank Button Press"]
 )
 @patch("gerousiabot.bot_handlers.Response", test_response)
-def test_keyboard_button_pressed(_input):
+def test_valid_keyboard_button_pressed(_input):
     mocked_update, mocked_context = Mock(), Mock()
 
     mocked_update.effective_chat.id = 0
@@ -75,6 +88,16 @@ def test_keyboard_button_pressed(_input):
 
     assert mocked_update.effective_chat.id == 0
     mocked_context.bot.send_message.assert_called()
+
+
+def test_invalid_keyboard_button_throws_exception():
+    mocked_update, mocked_context = Mock(), Mock()
+
+    mocked_update.effective_chat.id = 0
+    mocked_update.callback_query.data = 'INVALID_BUTTON'
+
+    with pytest.raises(RuntimeError):
+        bot_handlers.keyboard_button_pressed(mocked_update, mocked_context)
 
 
 def test_get_user_list():

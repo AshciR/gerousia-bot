@@ -62,8 +62,9 @@ def keyboard_button_pressed(update: Update, context: CallbackContext) -> Optiona
         return context.bot.send_message(chat_id=update.effective_chat.id, text="Nothing to see here.")
 
     else:
-        logger.error('A unspecified button was selected')
-        return None
+        msg = 'A unspecified button was selected'
+        logger.error(msg)
+        raise RuntimeError(msg)
 
 
 def get_user_list() -> list:
