@@ -1,5 +1,6 @@
-from gerousiabot import telegram_bot
 from unittest.mock import Mock, patch
+
+from gerousiabot import telegram_bot
 
 
 @patch("gerousiabot.telegram_bot.os.getenv")
@@ -13,7 +14,7 @@ def test_say_hello():
 
 
 @patch("gerousiabot.telegram_bot.start_bot")
-@patch("gerousiabot.telegram_bot.configure_bot")
+@patch("gerousiabot.telegram_bot.configure_bot_handlers")
 @patch("gerousiabot.bot_handlers.get_bot_handlers")
 @patch("gerousiabot.telegram_bot.get_api_token")
 def test_run_bot(mocked_get_api_token, mocked_get_bot_handlers, mocked_configure_bot, mocked_start_bot):
@@ -25,32 +26,13 @@ def test_run_bot(mocked_get_api_token, mocked_get_bot_handlers, mocked_configure
     mocked_start_bot.assert_called()
 
 
-@patch("gerousiabot.telegram_bot.logging")
-def test_setup_logger(mocked_logging):
-    telegram_bot.setup_logger()
-
-    mocked_logging.getLogger.assert_called()
-    mocked_logging.StreamHandler.assert_called()
-    mocked_logging.FileHandler.assert_called()
-
-    mocked_logging.StreamHandler().setLevel.assert_called()
-    mocked_logging.FileHandler().setLevel.assert_called()
-
-    assert mocked_logging.Formatter.call_count == 2
-
-    mocked_logging.StreamHandler().setFormatter.assert_called()
-    mocked_logging.FileHandler().setFormatter.assert_called()
-
-    assert mocked_logging.getLogger().addHandler.call_count == 2
-
-
 @patch("gerousiabot.telegram_bot.Updater")
 def test_configure_bot(mocked_updater):
     mocked_config = Mock()
     handler = Mock()
     mocked_updater.return_value = mocked_config
 
-    telegram_bot.configure_bot('test', [handler])
+    telegram_bot.configure_bot_handlers('test', [handler])
 
     mocked_config.dispatcher.add_handler.assert_called()
 

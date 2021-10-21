@@ -2,40 +2,12 @@
 This module will hold the functions used for the Telegram Bot.
 
 """
-import logging
 import os
-from gerousiabot import bot_handlers
 
 from dotenv import load_dotenv
 from telegram.ext import Updater
 
-
-def setup_logger() -> object:
-    """
-    Creates and configures a logger that will log
-    to both the console and a file (file.log)
-    :rtype: object the configured logger
-    """
-    # Create a custom logger
-    logger = logging.getLogger(__name__)
-
-    # Create handlers
-    c_handler = logging.StreamHandler()
-    f_handler = logging.FileHandler('file.log')
-    c_handler.setLevel(logging.WARNING)
-    f_handler.setLevel(logging.ERROR)
-
-    # Create formatters and add it to handlers
-    c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-    f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    c_handler.setFormatter(c_format)
-    f_handler.setFormatter(f_format)
-
-    # Add handlers to the logger
-    logger.addHandler(c_handler)
-    logger.addHandler(f_handler)
-
-    return logger
+from gerousiabot import bot_handlers
 
 
 def get_api_token(key) -> str:
@@ -48,7 +20,7 @@ def get_api_token(key) -> str:
     return os.getenv(key)
 
 
-def configure_bot(api_token, handlers) -> Updater:
+def configure_bot_handlers(api_token, handlers) -> Updater:
     """
     Configures the bot with correct handlers
     :param api_token: the API token
@@ -68,7 +40,7 @@ def configure_bot(api_token, handlers) -> Updater:
 def run_bot():
     bot_token = get_api_token('API_KEY')
     handlers = bot_handlers.get_bot_handlers()
-    telegram_bot = configure_bot(api_token=bot_token, handlers=handlers)
+    telegram_bot = configure_bot_handlers(api_token=bot_token, handlers=handlers)
     start_bot(telegram_bot)
 
 
