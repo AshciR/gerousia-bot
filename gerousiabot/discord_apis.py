@@ -8,7 +8,7 @@ from hikari.iterators import LazyIterator
 from typing import Sequence
 import asyncio
 import os
-from dotenv import load_dotenv
+
 
 def get_api_token(key) -> str:
     """
@@ -16,7 +16,6 @@ def get_api_token(key) -> str:
     :param key: the key for the token you want returned
     :return: the API token
     """
-    load_dotenv()
     return os.getenv(key)
 
 def get_rest_client() -> RESTClientImpl:

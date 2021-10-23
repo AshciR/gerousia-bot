@@ -25,15 +25,23 @@ cd gerousia-bot/gerousiabot
 ```
 pipenv install
 ```
-5. Start the environment
+5. Create a `.env` file using the `.env.template`
+
+```
+cat .env.template > .env
+```
+> Get some real keys and populate your `.env` file.
+
+6. Start the environment
+> pipenv will automatically load your .env file
 ```
 pipenv shell
 ```
-5.5 Verify the environment is using Python 3 (Option)
+7. Verify the environment is using Python 3 (Option)
 ```
 python --version // Python 3.X.X
 ```
-6. Run the application
+8. Run the application
 ```
 python gerousiabot/main.py
 ```
