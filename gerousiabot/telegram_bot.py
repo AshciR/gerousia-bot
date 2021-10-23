@@ -38,7 +38,7 @@ def configure_bot_handlers(api_token, handlers) -> Updater:
 
 
 def run_bot():
-    bot_token = get_api_token('API_KEY')
+    bot_token = get_api_token("API_KEY")
     handlers = bot_handlers.get_bot_handlers()
     telegram_bot = configure_bot_handlers(api_token=bot_token, handlers=handlers)
     start_bot(telegram_bot)
@@ -57,4 +57,4 @@ def start_bot(bot_updater):
 
 def say_hello() -> str:
     """Place holder function that simulates the bot saying hello"""
-    return 'The Telegram Bot says hello'
+    return "The Telegram Bot says hello"
