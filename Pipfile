@@ -7,7 +7,6 @@ name = "pypi"
 pytest = "*"
 pytest-cov = "*"
 python-telegram-bot = "*"
-python-dotenv = "*"
 mock = "*"
 hikari = "==2.0.0.dev103"
 pytest-asyncio = "*"
@@ -17,7 +16,6 @@ asyncio = "*"
 [dev-packages]
 flake8 = "*"
 python-telegram-bot = "*"
-python-dotenv = "*"
 
 [requires]
 python_version = "3"
