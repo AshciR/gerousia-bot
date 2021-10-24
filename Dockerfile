@@ -5,8 +5,8 @@ FROM python:3.10-alpine
 WORKDIR ./gerousiabot
 
 # Copy the required files into the docker image
-COPY ./gerousiabot ./gerousiabot
-COPY Pipfile* .
+COPY gerousiabot ./gerousiabot
+COPY Pipfile* ./
 COPY .env .
 
 # Install the pipenv package and its dependencies
