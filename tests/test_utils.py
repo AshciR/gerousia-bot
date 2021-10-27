@@ -20,3 +20,9 @@ def test_setup_logger(mocked_logging):
     mocked_logging.FileHandler().setFormatter.assert_called()
 
     assert mocked_logging.getLogger().addHandler.call_count == 2
+
+
+@patch("gerousiabot.utils.os.getenv")
+def test_get_api_token(mocked_env):
+    mocked_env.return_value = '56gghh123'
+    assert '56gghh123' == utils.get_api_token('TEST_KEY')

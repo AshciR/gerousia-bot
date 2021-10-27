@@ -1,4 +1,7 @@
 import logging
+import os
+
+from dotenv import load_dotenv
 
 
 def setup_logger() -> logging.Logger:
@@ -27,3 +30,13 @@ def setup_logger() -> logging.Logger:
     logger.addHandler(f_handler)
 
     return logger
+
+
+def get_api_token(key) -> str:
+    """
+    Gets the API token for a given key
+    :param key: the key for the token you want returned
+    :return: the API token
+    """
+    load_dotenv()  # Needed to run the application via the IDE
+    return os.getenv(key)

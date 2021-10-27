@@ -2,20 +2,11 @@
 This module will hold the functions used for the Telegram Bot.
 
 """
-import os
 
 from telegram.ext import Updater
 
 from gerousiabot import bot_handlers
-
-
-def get_api_token(key) -> str:
-    """
-    Gets the API token for a given key
-    :param key: the key for the token you want returned
-    :return: the API token
-    """
-    return os.getenv(key)
+from gerousiabot import utils
 
 
 def configure_bot_handlers(api_token, handlers) -> Updater:
@@ -36,7 +27,7 @@ def configure_bot_handlers(api_token, handlers) -> Updater:
 
 
 def run_bot():
-    bot_token = get_api_token('API_KEY')
+    bot_token = utils.get_api_token('API_KEY')
     handlers = bot_handlers.get_bot_handlers()
     telegram_bot = configure_bot_handlers(api_token=bot_token, handlers=handlers)
     start_bot(telegram_bot)
