@@ -4,7 +4,7 @@ FROM python:3.10-alpine
 # Copy the required files into the docker image
 RUN mkdir /bot
 COPY gerousiabot /bot/gerousiabot
-COPY Pipfile* /bot
+COPY Pipfile* /bot/
 COPY .env /bot
 
 # Use this path (that contains the Dockerfile) as the working dir
