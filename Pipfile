@@ -12,10 +12,12 @@ hikari = "==2.0.0.dev103"
 pytest-asyncio = "*"
 asyncmock = "*"
 asyncio = "*"
+python-dotenv = "*"
 
 [dev-packages]
 flake8 = "*"
 python-telegram-bot = "*"
+python-dotenv = "*"
 
 [requires]
-python_version = "3"
+python_version = "3.10"
