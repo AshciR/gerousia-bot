@@ -13,11 +13,13 @@ pytest-asyncio = "*"
 asyncmock = "*"
 asyncio = "*"
 python-dotenv = "*"
+py-cord = "*"
 
 [dev-packages]
 flake8 = "*"
 python-telegram-bot = "*"
 python-dotenv = "*"
+py-cord = "*"
 
 [requires]
 python_version = "3.10"
