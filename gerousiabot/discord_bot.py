@@ -24,15 +24,36 @@ class GerousiaBot(Client):
         logger.info('Bot has logged in as {0.user}'.format(self))
 
         server_id = int(utils.get_env_variable('GOOD_LOOKING_GAMERS_SERVER_ID'))
-        online_members = await self.get_server_online_members(server_id)
         guild_voice_channels = await self.get_server_voice_channels(server_id)
+        members_in_voice_channels = await self.get_members_who_are_in_voice_channels(guild_voice_channels)
 
-        # TODO: Create function that will filter guild_voice_channels based on channels with members in them
-        # TODO: Can use guild_voice_channels.members
-        # TODO: Collect a list that has all the member currently in channels
+        for member in members_in_voice_channels:
+            print(member)
 
-        for online_member in online_members:
-            print(online_member.name)
+    async def get_members_who_are_in_voice_channels(self, voice_channels: List[VoiceChannel]) -> List[str]:
+        """
+        Gets all of the members who are in voice channels for a given server
+        :param voice_channels: a list of voice channels
+        :return: A list of strings with each members display name in Discord
+        """
+        voice_channels_with_members = list(
+            (filter(lambda voice_channel: len(voice_channel.members) != 0, voice_channels))
+        )
+
+        # This will be a list of lists
+        # [ [member_0, member_1], [member_2], etc ]
+        online_members = list(
+            map(lambda voice_channel: voice_channel.members, voice_channels_with_members)
+        )
+
+        # Converting from List of lists to a single List that has the members
+        flattened_online_members = [online_member for members in online_members for online_member in members]
+
+        online_members_display_names = list(
+            map(lambda member: member.display_name, flattened_online_members)
+        )
+
+        return online_members_display_names
 
     async def get_server_online_members(self, server_id: int) -> List[Member]:
         """
