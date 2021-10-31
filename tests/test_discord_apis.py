@@ -6,7 +6,7 @@ import pytest
 from gerousiabot import discord_apis
 
 
-@patch("gerousiabot.utils.get_api_token")
+@patch("gerousiabot.utils.get_env_variable")
 @patch("gerousiabot.discord_apis.hikari.RESTApp.acquire")
 @patch("gerousiabot.discord_apis.hikari.RESTApp")
 def test_get_rest_client(mocked_rest_app, mocked_acquire, mocked_get_api_token):

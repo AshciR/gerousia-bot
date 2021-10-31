@@ -1,14 +1,23 @@
 import discord
+# TODO: Put these into a function
+from discord import Intents
+
+from gerousiabot import utils
+
 
 # TODO: Split this file into small, testable, reusable functions
 
-# TODO: Put these into a function
-intents = discord.Intents.default()
-intents.presences = True
-intents.members = True
+def get_intents_needed_to_check_online_members() -> Intents:
+    intents = discord.Intents.default()
+    intents.presences = True
+    intents.members = True
+
+    return intents
+
 
 # TODO: Make this it's own function
-client = discord.Client(intents=intents)
+intents2 = get_intents_needed_to_check_online_members()
+client = discord.Client(intents=intents2)
 
 
 @client.event
@@ -16,7 +25,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
     # TODO: Replace this with GLG server id
-    server_id = 1234
+    server_id = int(utils.get_env_variable('GOOD_LOOKING_GAMERS_SERVER_ID'))
     guild = client.get_guild(server_id)
 
     # TODO: Create function for this (Might not need it tho)
@@ -36,4 +45,5 @@ async def on_ready():
 
 
 if __name__ == '__main__':
-    client.run('use-token-here')
+    bot_token = utils.get_env_variable('ASHCIR_BOT_TOKEN')
+    client.run(bot_token)

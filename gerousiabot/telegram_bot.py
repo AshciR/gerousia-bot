@@ -27,7 +27,7 @@ def configure_bot_handlers(api_token, handlers) -> Updater:
 
 
 def run_bot():
-    bot_token = utils.get_api_token('API_KEY')
+    bot_token = utils.get_env_variable('API_KEY')
     handlers = bot_handlers.get_bot_handlers()
     telegram_bot = configure_bot_handlers(api_token=bot_token, handlers=handlers)
     start_bot(telegram_bot)

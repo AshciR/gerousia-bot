@@ -14,7 +14,7 @@ from gerousiabot import utils
 
 def get_rest_client() -> RESTClientImpl:
     rest_app = hikari.RESTApp()
-    token = utils.get_api_token("DISCORD_API_KEY")
+    token = utils.get_env_variable("DISCORD_API_KEY")
     rest_client = rest_app.acquire(token, "Bot")
     return rest_client
 

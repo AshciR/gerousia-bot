@@ -10,7 +10,7 @@ def test_say_hello():
 @patch("gerousiabot.telegram_bot.start_bot")
 @patch("gerousiabot.telegram_bot.configure_bot_handlers")
 @patch("gerousiabot.bot_handlers.get_bot_handlers")
-@patch("gerousiabot.utils.get_api_token")
+@patch("gerousiabot.utils.get_env_variable")
 def test_run_bot(mocked_get_api_token, mocked_get_bot_handlers, mocked_configure_bot, mocked_start_bot):
     telegram_bot.run_bot()
 
