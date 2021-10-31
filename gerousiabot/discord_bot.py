@@ -4,20 +4,22 @@ from discord import Intents
 
 from gerousiabot import utils
 
+logger = utils.setup_logger()
 
-# TODO: Split this file into small, testable, reusable functions
 
 class GerousiaBot(discord.Client):
 
     def __init__(self, bot_token: str, **options):
-        super().__init__(intents=get_intents_needed_to_check_online_members(), **options)
+
+        intents = get_intents_needed_to_check_online_members()
+        logger.debug('Creating bot with with intents {}'.format(intents))
+
+        super().__init__(intents=intents, **options)
+        logger.debug('Creating bot with with valid token {}'.format(bot_token is not None))
         self.bot_token = bot_token
 
     async def on_ready(self):
-        intents2 = get_intents_needed_to_check_online_members()
-        # client = discord.Client(intents=intents2)
-
-        print('We have logged in as {0.user}'.format(self))
+        logger.info('Bot has logged in as {0.user}'.format(self))
 
         # TODO: Replace this with GLG server id
         server_id = int(utils.get_env_variable('GOOD_LOOKING_GAMERS_SERVER_ID'))
