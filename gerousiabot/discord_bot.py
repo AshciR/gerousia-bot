@@ -1,6 +1,8 @@
+from typing import List
+
 import discord
 # TODO: Put these into a function
-from discord import Intents
+from discord import Intents, Member
 
 from gerousiabot import utils
 
@@ -10,7 +12,6 @@ logger = utils.setup_logger()
 class GerousiaBot(discord.Client):
 
     def __init__(self, bot_token: str, **options):
-
         intents = get_intents_needed_to_check_online_members()
         logger.debug('Creating bot with with intents {}'.format(intents))
 
@@ -21,17 +22,13 @@ class GerousiaBot(discord.Client):
     async def on_ready(self):
         logger.info('Bot has logged in as {0.user}'.format(self))
 
-        # TODO: Replace this with GLG server id
         server_id = int(utils.get_env_variable('GOOD_LOOKING_GAMERS_SERVER_ID'))
-        guild = self.get_guild(server_id)
+        online_members = await self.get_server_online_members(server_id)
 
-        # TODO: Create function for this (Might not need it tho)
-        members = guild.members
-        online_members = list(filter(lambda member: member.status.value == 'online', members))
-
+        server = self.get_guild(server_id)
         # TODO: Create function for this
         # The filter is ensured to return only 1 value b/c we're only checking this guild
-        guild_voice_channels = list(filter(lambda x: x.name == 'Voice Channels', guild.channels))[0].voice_channels
+        guild_voice_channels = list(filter(lambda x: x.name == 'Voice Channels', server.channels))[0].voice_channels
 
         # TODO: Create function that will filter guild_voice_channels based on channels with members in them
         # TODO: Can use guild_voice_channels.members
@@ -39,6 +36,14 @@ class GerousiaBot(discord.Client):
 
         for online_member in online_members:
             print(online_member.name)
+
+    async def get_server_online_members(self, server_id: int) -> List[Member]:
+        server = self.get_guild(server_id)
+        members = server.members
+        online_members = list(filter(lambda member: member.status.value == 'online', members))
+
+        logger.info('Returning {} online members for server {}'.format(len(online_members), server.name))
+        return online_members
 
 
 def get_intents_needed_to_check_online_members() -> Intents:
