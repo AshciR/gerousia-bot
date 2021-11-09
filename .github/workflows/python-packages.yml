@@ -33,12 +33,3 @@ jobs:
         pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: pipenv run pytest --cov --cov-fail-under=80
-    - name: Build binary wheel and a source tarball
-      run: |
-        pipenv-setup sync --dev
-        python setup.py sdist
-    #- name: Publish distribution to Test PyPI
-    #  uses: pypa/gh-action-pypi-publish@master
-    #  with:
-    #    password: ${{ secrets.test_pypi_password }}
-    #    repository_url: https://test.pypi.org/legacy/
