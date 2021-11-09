@@ -10,7 +10,7 @@ server.
 - Python 3+
 - pipenv
 
-### Configure the project locally
+### Configure the project locally:
 
 1. Install the pipenv package and its dependencies (if you don't already have it)
 
@@ -44,11 +44,11 @@ cat .env.template > .env
 
 > Get some real keys and populate your `.env` file.
 
-### Running the project locally
+### Running the project locally:
 
 You have a few ways to run the project
 
-#### Interactively
+#### A. Interactively
 
 1. Start the environment
 
@@ -66,11 +66,11 @@ python --version // Python 3.X.X
 
 3. Run the application
 
-``q`
+```
 python gerousiabot/main.py
 ```
 
-#### Non-Interactively
+#### B. Non-Interactively
 
 1. Run the pipenv in the non-interactive mode
 
@@ -78,7 +78,7 @@ python gerousiabot/main.py
 pipenv run python gerousiabot/main.py
 ```
 
-#### Non-Interactively via Docker
+#### C. Non-Interactively via Docker
 
 0. Assumes that you have Docker installed on your machine
 
@@ -98,7 +98,7 @@ docker build . -t <whatever-you-want-to-name-the-image>
 docker run -d <whatever-you-want-to-name-the-image>
 ```
 
-### Testing
+### Testing:
 
 This project also has unit tests. To run the unit tests run the following command.
 
