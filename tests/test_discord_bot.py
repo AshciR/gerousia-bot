@@ -55,8 +55,8 @@ def test_run_bot(mocked_run,mocked_get_env,mocked_bot):
 @pytest.mark.asyncio
 @patch.object(discord_bot.GerousiaBot, 'get_server_voice_channels' )
 @patch.object(discord_bot.GerousiaBot, 'get_members_who_are_in_voice_channels')
-async def test_on_ready(mocked_get_members,mocked_get_server):
-    server_id = 'GOOD_LOOKING_GAMERS_SERVER_ID'
+@patch("gerousiabot.utils.get_env_variable",return_value='11111111111111111')
+async def test_on_ready(mocked_get_env,mocked_get_members,mocked_get_server):
     res = await g_bot.on_ready()
     mocked_get_members.assert_called()
     mocked_get_server.assert_called()
