@@ -55,19 +55,6 @@ class GerousiaBot(Client):
 
         return online_members_display_names
 
-    async def get_server_online_members(self, server_id: int) -> List[Member]:
-        """
-        Returns all the members who are online for a given server.
-        :param server_id: the server id
-        :return: a list of online members
-        """
-        server = self.get_guild(server_id)
-        members = server.members
-        online_members = list(filter(lambda member: member.status.value == 'online', members))
-
-        logger.info('Returning {} online members for server {}'.format(len(online_members), server.name))
-        return online_members
-
     async def get_server_voice_channels(self, server_id: int) -> List[VoiceChannel]:
         """
         Returns all the voice channels for a given server
@@ -75,14 +62,19 @@ class GerousiaBot(Client):
         :return: the voice channels
         """
         server = self.get_guild(server_id)
-
+        
         # Guilds(Servers) have 2 channel types. Text and Voice
         # We only want the Voice channels.
-        server_channels = list(filter(lambda x: x.name == 'Voice Channels', server.channels))
-
+        server_channels = list(filter(lambda x: hasattr(x,'voice_channels'), server.channels))
+        
         # Guild(Servers) objects will only have 1 'Voice Channels' property
         # So it's safe to access the 0th index
-        guild_voice_channels = server_channels[0].voice_channels
+        # Converting from List of lists to a single List that has the voice channels
+        guild_voice_channels = []
+        
+        for server_channel in server_channels:
+            guild_voice_channels.extend(server_channel.voice_channels)
+
         return guild_voice_channels
 
 
@@ -94,7 +86,7 @@ def get_intents_needed_to_check_online_members() -> Intents:
     return intents
 
 
-if __name__ == '__main__':
-    bot_token = utils.get_env_variable('ASHCIR_BOT_TOKEN')
+def run_bot():
+    bot_token = utils.get_env_variable('DISCORD_API_KEY')
     g_bot = GerousiaBot(bot_token=bot_token)
     g_bot.run(bot_token)

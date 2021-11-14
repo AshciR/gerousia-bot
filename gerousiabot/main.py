@@ -1,5 +1,6 @@
 import discord_apis
 import telegram_bot
+import discord_bot 
 
 """
 The main function for the bot. 
@@ -12,5 +13,6 @@ if __name__ == '__main__':
     server_status = discord_apis.ping_server()
     print(f'The server returned {server_status}')
 
+    discord_bot.run_bot()
     discord_apis.print_user()
     telegram_bot.run_bot()
