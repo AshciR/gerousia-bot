@@ -13,9 +13,8 @@ class GerousiaBot(Client):
         intents = get_intents_needed_to_check_online_members()
         logger.debug('Creating bot with with intents {}'.format(intents))
 
-        super().__init__(intents=intents, **options)
+        super().__init__(bot_token=bot_token,intents=intents, **options)
         logger.debug('Creating bot with with valid token {}'.format(bot_token is not None))
-        self.bot_token = bot_token
 
     async def on_ready(self):
         """
@@ -47,7 +46,7 @@ class GerousiaBot(Client):
         )
 
         # Converting from List of lists to a single List that has the members
-        flattened_online_members = [online_member for members in online_members for online_member in members]
+        flattened_online_members = sum(online_members, [])
 
         online_members_display_names = list(
             map(lambda member: member.display_name, flattened_online_members)
@@ -64,18 +63,19 @@ class GerousiaBot(Client):
         server = self.get_guild(server_id)
         
         # Guilds(Servers) have 2 channel types. Text and Voice
-        # We only want the Voice channels.
+        # We only want the Servers with Voice channels.
         server_channels = list(filter(lambda x: hasattr(x,'voice_channels'), server.channels))
         
-        # Guild(Servers) objects will only have 1 'Voice Channels' property
-        # So it's safe to access the 0th index
-        # Converting from List of lists to a single List that has the voice channels
-        guild_voice_channels = []
-        
-        for server_channel in server_channels:
-            guild_voice_channels.extend(server_channel.voice_channels)
+        # Guild(Servers) channels  may have multiple 'Voice Channels' property
+        # So we are checking all of them which will result in a list of lists
+        guild_voice_channels = list(
+            map(lambda server_channel: server_channel.voice_channels, server_channels)
+        )
 
-        return guild_voice_channels
+        # Converting from List of lists to a single List that has the voice channels
+        flatten_guild_voice_channels = sum(guild_voice_channels,[])
+
+        return flatten_guild_voice_channels
 
 
 def get_intents_needed_to_check_online_members() -> Intents:
