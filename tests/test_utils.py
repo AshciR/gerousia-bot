@@ -25,4 +25,4 @@ def test_setup_logger(mocked_logging):
 @patch("gerousiabot.utils.os.getenv")
 def test_get_api_token(mocked_env):
     mocked_env.return_value = '56gghh123'
-    assert '56gghh123' == utils.get_api_token('TEST_KEY')
+    assert '56gghh123' == utils.get_env_variable('TEST_KEY')

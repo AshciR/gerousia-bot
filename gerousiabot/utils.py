@@ -32,7 +32,7 @@ def setup_logger() -> logging.Logger:
     return logger
 
 
-def get_api_token(key) -> str:
+def get_env_variable(key) -> str:
     """
     Gets the API token for a given key
     :param key: the key for the token you want returned
