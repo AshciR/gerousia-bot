@@ -1,19 +1,19 @@
 from typing import List
 
-from discord import Intents, Member, VoiceChannel, Client
+from discord import Intents, VoiceChannel, Client
 
 from gerousiabot import utils
 
 logger = utils.setup_logger()
 
 
-class GerousiaBot(Client):
+class DiscordBot(Client):
 
     def __init__(self, bot_token: str, **options):
         intents = get_intents_needed_to_check_online_members()
         logger.debug('Creating bot with with intents {}'.format(intents))
 
-        super().__init__(bot_token=bot_token,intents=intents, **options)
+        super().__init__(bot_token=bot_token, intents=intents, **options)
         logger.debug('Creating bot with with valid token {}'.format(bot_token is not None))
 
     async def on_ready(self):
@@ -61,11 +61,11 @@ class GerousiaBot(Client):
         :return: the voice channels
         """
         server = self.get_guild(server_id)
-        
+
         # Guilds(Servers) have 2 channel types. Text and Voice
         # We only want the Servers with Voice channels.
-        server_channels = list(filter(lambda x: hasattr(x,'voice_channels'), server.channels))
-        
+        server_channels = list(filter(lambda x: hasattr(x, 'voice_channels'), server.channels))
+
         # Guild(Servers) channels  may have multiple 'Voice Channels' property
         # So we are checking all of them which will result in a list of lists
         guild_voice_channels = list(
@@ -73,7 +73,7 @@ class GerousiaBot(Client):
         )
 
         # Converting from List of lists to a single List that has the voice channels
-        flatten_guild_voice_channels = sum(guild_voice_channels,[])
+        flatten_guild_voice_channels = sum(guild_voice_channels, [])
 
         return flatten_guild_voice_channels
 
@@ -88,5 +88,5 @@ def get_intents_needed_to_check_online_members() -> Intents:
 
 def run_bot():
     bot_token = utils.get_env_variable('DISCORD_API_KEY')
-    g_bot = GerousiaBot(bot_token=bot_token)
+    g_bot = DiscordBot(bot_token=bot_token)
     g_bot.run(bot_token)

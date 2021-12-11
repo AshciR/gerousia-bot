@@ -3,10 +3,15 @@ This module will hold the functions used for the Telegram Bot.
 
 """
 
-from telegram.ext import Updater
+from telegram.ext import Updater, Handler
 
 from gerousiabot import bot_handlers
 from gerousiabot import utils
+
+
+# class TelegramBot:
+#
+#     def __init__(self, api_token: str, handlers: list[Handler], discord):
 
 
 def configure_bot_handlers(api_token, handlers) -> Updater:
