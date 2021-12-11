@@ -7,7 +7,7 @@ from typing import List
 
 from telegram.ext import Updater, Handler
 
-from gerousiabot import bot_handlers
+from gerousiabot import telegram_bot_handlers
 from gerousiabot import utils
 from gerousiabot.discord_bot import DiscordBot
 
@@ -62,7 +62,7 @@ class TelegramBot:
 
 def run_bot(discord_bot: DiscordBot):
     bot_token = utils.get_env_variable('API_KEY')
-    handlers = bot_handlers.get_bot_handlers()
+    handlers = telegram_bot_handlers.get_bot_handlers()
     telegram_bot = TelegramBot(bot_token, handlers, discord_bot)
 
     telegram_bot.start_bot()
