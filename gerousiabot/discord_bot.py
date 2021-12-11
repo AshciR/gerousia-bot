@@ -11,10 +11,10 @@ class DiscordBot(Client):
 
     def __init__(self, bot_token: str, **options):
         intents = get_intents_needed_to_check_online_members()
-        logger.debug('Creating bot with with intents {}'.format(intents))
+        logger.debug('Creating DiscordBot with with intents {}'.format(intents))
 
         super().__init__(bot_token=bot_token, intents=intents, **options)
-        logger.debug('Creating bot with with valid token {}'.format(bot_token is not None))
+        logger.debug('Creating DiscordBot with with valid token {}'.format(bot_token is not None))
 
     async def on_ready(self):
         """
@@ -86,7 +86,13 @@ def get_intents_needed_to_check_online_members() -> Intents:
     return intents
 
 
-def run_bot():
+def run_bot() -> DiscordBot:
+    """
+    Starts the Discord bot
+    :return: the started DiscordBot
+    """
     bot_token = utils.get_env_variable('DISCORD_API_KEY')
-    g_bot = DiscordBot(bot_token=bot_token)
-    g_bot.run(bot_token)
+    discord_bot = DiscordBot(bot_token=bot_token)
+    discord_bot.run(bot_token)
+
+    return discord_bot

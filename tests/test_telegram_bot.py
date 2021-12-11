@@ -3,10 +3,6 @@ from unittest.mock import Mock, patch
 from gerousiabot import telegram_bot
 
 
-def test_say_hello():
-    assert 'The Telegram Bot says hello' == telegram_bot.say_hello()
-
-
 @patch("gerousiabot.telegram_bot.start_bot")
 @patch("gerousiabot.telegram_bot.configure_bot_handlers")
 @patch("gerousiabot.bot_handlers.get_bot_handlers")
