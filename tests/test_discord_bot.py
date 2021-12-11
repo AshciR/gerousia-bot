@@ -41,8 +41,8 @@ class MockGuild:
 @pytest.fixture
 def set_up():
     bot_token = 'DISCORD_API_KEY'
-    g_bot = discord_bot.DiscordBot(bot_token=bot_token)
-    return g_bot
+    d_bot = discord_bot.DiscordBot(bot_token=bot_token)
+    return d_bot
 
 
 @pytest.fixture
