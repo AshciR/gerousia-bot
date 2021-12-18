@@ -77,7 +77,7 @@ def test_start_keyboard():
     "_input", [test_response.CHECK_USERS.name, test_response.BLANK.name],
     ids=["Check User Button Press", "Blank Button Press"]
 )
-@patch("gerousiabot.bot_handlers.Response", test_response)
+@patch("gerousiabot.telegram_bot_handlers.Response", test_response)
 def test_valid_keyboard_button_pressed(_input):
     mocked_update, mocked_context = Mock(), Mock()
 

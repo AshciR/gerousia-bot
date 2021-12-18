@@ -1,12 +1,7 @@
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 from gerousiabot import telegram_bot
 from gerousiabot.telegram_bot import TelegramBot
-
-
-class MockDispatcher:
-    def add_handler(self, handler):
-        return 'Mock {} handler called'.format(handler)
 
 
 @patch("gerousiabot.telegram_bot.Updater")
@@ -39,33 +34,20 @@ def test_start_bot(mock_discord_bot, mock_updater):
     assert bot.telegram_bot_updater.method_calls[1][0] == 'idle'
 
 
+@patch("gerousiabot.utils.get_env_variable", return_value='1234')
+@patch("gerousiabot.telegram_bot.DiscordBot")
+@patch("gerousiabot.telegram_bot_handlers.get_bot_handlers")
+@patch("gerousiabot.telegram_bot.TelegramBot")
+def test_run_bot(mock_telegram_bot, mock_get_bot_handlers, mock_discord_bot, mock_get_env_variable):
+    # When: The Telegram Bot is ran
+    telegram_bot.run_bot(mock_discord_bot)
 
-@patch("gerousiabot.telegram_bot.start_bot")
-@patch("gerousiabot.telegram_bot.configure_bot_handlers")
-@patch("gerousiabot.bot_handlers.get_bot_handlers")
-@patch("gerousiabot.utils.get_env_variable")
-def test_run_bot(mocked_get_api_token, mocked_get_bot_handlers, mocked_configure_bot, mocked_start_bot):
-    telegram_bot.run_bot()
-
-    mocked_get_api_token.assert_called()
-    mocked_get_bot_handlers.assert_called()
-    mocked_configure_bot.assert_called()
-    mocked_start_bot.assert_called()
+    # Then: The following methods should be called
+    mock_get_env_variable.assert_called()
+    mock_get_bot_handlers.assert_called()
+    assert mock_telegram_bot.called
 
 
-@patch("gerousiabot.telegram_bot.Updater")
-def test_configure_bot(mocked_updater):
-    mocked_config = Mock()
-    handler = Mock()
-    mocked_updater.return_value = mocked_config
-
-    telegram_bot.configure_bot_handlers('test', [handler])
-
-    mocked_config.dispatcher.add_handler.assert_called()
-
-# def test_start_bot():
-#     mocked_bot_updater = Mock()
-#     telegram_bot.start_bot(mocked_bot_updater)
-#
-#     mocked_bot_updater.start_polling.assert_called()
-#     mocked_bot_updater.idle.assert_called()
+class MockDispatcher:
+    def add_handler(self, handler):
+        return 'Mock {} handler called'.format(handler)
