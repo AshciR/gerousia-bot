@@ -36,7 +36,7 @@ class TelegramBot:
 
     def configure_bot_handlers(self, telegram_bot_updater: Updater, handlers: List[Handler]) -> Updater:
         """
-        Attaches the provided handlers to the procided Telegram bot
+        Attaches the provided handlers to the provided Telegram bot
         :param telegram_bot_updater: the updater that the handlers will be attached to
         :param handlers: the handlers for bot
         :return: the configured Updater
