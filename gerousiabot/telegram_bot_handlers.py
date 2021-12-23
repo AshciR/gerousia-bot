@@ -16,18 +16,18 @@ def get_bot_handlers() -> list:
     Gets the list of the handlers to be used by the bot
     :return: the list of the handlers
     """
-    start_handler = CommandHandler('start', start)
-    user_query_handler = CommandHandler('chkusers', check_users)
+    start_handler = CommandHandler('start', start_command)
+    check_users_handler = CommandHandler('chkusers', check_users_command)
     help_handler = CommandHandler('help', help_command)
 
     button_handler = CallbackQueryHandler(keyboard_button_pressed)
     unknown_handler = MessageHandler(Filters.command, unknown_command)
 
     # unknown command handler must be the last added handler or we run into logical errors
-    return [start_handler, user_query_handler, help_handler, button_handler, unknown_handler]
+    return [start_handler, check_users_handler, help_handler, button_handler, unknown_handler]
 
 
-def start(update, context) -> None:
+def start_command(update, context) -> None:
     """Handler definition for the bot start command: /start"""
     context.bot.send_message(chat_id=update.effective_chat.id, text="Gerousia bot! 🤖")
     kb_markup = InlineKeyboardMarkup(get_keyboard())
@@ -76,7 +76,7 @@ def get_user_list() -> list:
     return user_list
 
 
-def check_users(update, context) -> None:
+def check_users_command(update, context) -> None:
     """
     Handler definition for check users command: /chkusers
     Used to retrieve the names of the users currently logged in.
