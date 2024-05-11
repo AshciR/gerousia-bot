@@ -2,7 +2,7 @@ from typing import List
 
 from discord import Intents, VoiceChannel, Client
 
-from gerousiabot import utils
+from src.gerousiabot import utils
 
 logger = utils.setup_logger()
 
@@ -31,7 +31,7 @@ class DiscordBot(Client):
 
     async def get_members_who_are_in_voice_channels(self, voice_channels: List[VoiceChannel]) -> List[str]:
         """
-        Gets all of the members who are in voice channels for a given server
+        Gets all the members who are in voice channels for a given server
         :param voice_channels: a list of voice channels
         :return: A list of strings with each members display name in Discord
         """

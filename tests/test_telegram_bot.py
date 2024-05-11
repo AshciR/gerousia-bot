@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
-from gerousiabot import telegram_bot
-from gerousiabot.telegram_bot import TelegramBot
+from src.gerousiabot import telegram_bot
+from src.gerousiabot.telegram_bot import TelegramBot
 
 
 @patch("gerousiabot.telegram_bot.Updater")

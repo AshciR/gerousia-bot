@@ -1,0 +1,26 @@
+[project]
+name = "gerousia-bot"
+version = "0.1.0"
+
+dependencies = [
+    "python-telegram-bot",
+    "python-dotenv",
+    "py-cord"
+]
+
+[tool.rye]
+virtual = true
+dev-dependencies = [
+    "pytest",
+    "pytest-xdist",
+    "pytest-spec",
+    "pytest-mock"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.rye.scripts]
+build-dev = "docker-compose up -d --build"
+dev = "docker-compose up -d"
+

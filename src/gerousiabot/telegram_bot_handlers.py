@@ -4,7 +4,7 @@ from typing import Optional
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Message
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler, CallbackContext
 
-from gerousiabot.utils import setup_logger
+from src.gerousiabot.utils import setup_logger
 
 Response = Enum('Response', ['CHECK_USERS', 'CHECK_DOTA', 'BLANK'])
 

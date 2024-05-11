@@ -2,7 +2,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from gerousiabot import telegram_bot_handlers
+from src.gerousiabot import telegram_bot_handlers
 
 test_response = telegram_bot_handlers.Response
 
@@ -44,7 +44,8 @@ def test_check_users_command():
     telegram_bot_handlers.check_users_command(mocked_update, mocked_context)
 
     mocked_context.bot.send_message.assert_called()
-    expected_text = f"Users currently on the server:\n" + telegram_bot_handlers.format_user_list(telegram_bot_handlers.get_user_list())
+    expected_text = f"Users currently on the server:\n" + telegram_bot_handlers.format_user_list(
+        telegram_bot_handlers.get_user_list())
     mocked_context.bot.send_message.assert_called_with(chat_id=0, text=expected_text)
 
 

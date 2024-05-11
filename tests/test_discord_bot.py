@@ -3,8 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from gerousiabot import discord_bot
-from gerousiabot import utils
+from src.gerousiabot import discord_bot, utils
 
 logger = utils.setup_logger()
 

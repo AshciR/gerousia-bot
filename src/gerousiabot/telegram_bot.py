@@ -7,9 +7,8 @@ from typing import List
 
 from telegram.ext import Updater, Handler
 
-from gerousiabot import telegram_bot_handlers
-from gerousiabot import utils
-from gerousiabot.discord_bot import DiscordBot
+from src.gerousiabot import utils, telegram_bot_handlers
+from src.gerousiabot.discord_bot import DiscordBot
 
 logger = utils.setup_logger()
 
