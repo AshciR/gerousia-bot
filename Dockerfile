@@ -3,7 +3,7 @@ FROM python:3.10-alpine
 
 # Copy the required files into the docker image
 RUN mkdir /bot
-COPY gerousiabot /bot/gerousiabot
+COPY src/gerousiabot /bot/gerousiabot
 COPY Pipfile* /bot/
 COPY .env /bot
 

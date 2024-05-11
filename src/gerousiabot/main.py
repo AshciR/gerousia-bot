@@ -1,6 +1,6 @@
 import discord_bot
-import telegram_bot
-from gerousiabot import utils
+# import telegram_bot
+from src.gerousiabot import utils
 
 """
 The main function for the bot. 
@@ -16,4 +16,4 @@ if __name__ == '__main__':
     print(discord_bot_start_msg)
 
     discord_bot = discord_bot.run_bot()
-    telegram_bot.run_bot(discord_bot)
+    # telegram_bot.run_bot(discord_bot)

@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from gerousiabot import utils
+from src.gerousiabot import utils
 
 
 @patch("gerousiabot.utils.logging")
